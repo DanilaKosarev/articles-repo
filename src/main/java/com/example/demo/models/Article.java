@@ -29,6 +29,12 @@ public class Article {
     public Article() {
     }
 
+    public Article(String author, String title, String content) {
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+
     public Article(int id, String author, String title, String content, Date datePublished) {
         this.id = id;
         this.author = author;

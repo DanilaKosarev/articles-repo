@@ -18,8 +18,7 @@ public class StatisticsService {
 
     private final ArticlesRepository articlesRepository;
 
-    @Value("${days_for_statistics}")
-    private int daysForStatistics;
+    private static final int DAYS_FOR_STATISTICS = 7;
 
     public StatisticsService(ArticlesRepository articlesRepository) {
         this.articlesRepository = articlesRepository;
@@ -31,7 +30,7 @@ public class StatisticsService {
         Date currentDate;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 
-        for(int day = 0; day < daysForStatistics; day++){
+        for(int day = 0; day < DAYS_FOR_STATISTICS; day++){
 
             currentDate = Date.from(ZonedDateTime.now().minusDays(day).toInstant());
 

@@ -3,13 +3,12 @@ package com.example.demo.services;
 import com.example.demo.models.Article;
 import com.example.demo.repositories.ArticlesRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.springframework.data.domain.*;
 
 import static org.mockito.Mockito.verify;
 
@@ -34,6 +33,23 @@ public class ArticlesServiceTest {
 
         //then
         verify(articlesRepository).findAll();
+    }
+
+    @Test
+    void shouldCallFindAllWithPageable(){
+        //given
+        var articles = mock(Page.class);
+        when(articlesRepository.findAll(any(PageRequest.class))).thenReturn(articles);
+
+        int page = 1;
+        int itemsPerPage = 10;
+
+        //when
+        underTest.findAll(page,itemsPerPage);
+
+        //then
+        verify(articlesRepository).findAll(PageRequest.of(page, itemsPerPage));
+        verifyNoMoreInteractions(articlesRepository);
     }
 
     @Test

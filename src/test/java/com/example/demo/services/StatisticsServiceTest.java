@@ -7,11 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class StatisticsServiceTest {
@@ -25,11 +25,13 @@ public class StatisticsServiceTest {
 
     @Test
     void shouldCallArticlesRepositoryMethods(){
-
         //when
         underTest.showCountOfArticlesDaily();
 
         //then
+        verify(articlesRepository, times(7)).countAllByDatePublished(any());
+
         assertThat(underTest.showCountOfArticlesDaily()).isNotNull();
+        assertThat(underTest.showCountOfArticlesDaily().size()).isEqualTo(7);
     }
 }
